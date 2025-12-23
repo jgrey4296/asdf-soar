@@ -19,12 +19,18 @@ plugin_dir=$(dirname "$(dirname "$current_script_path")")
 source "${plugin_dir}/lib/utils.bash"
 
 release_file="SoarSuite_${ASDF_INSTALL_VERSION}-Multiplatform.zip"
+url="$GH_REPO/releases/download/releases/${ASDF_INSTALL_VERSION}/${release_file}"
 
 # Download tar.gz file to the download directory
-download_release "$ASDF_INSTALL_VERSION" "$release_file"
+echo "* Downloading $TOOL_NAME release $ASDF_INSTALL_VERSION..."
+mkdir -p "$ASDF_DOWNLOAD_PATH"
+curl "${curl_opts[@]}" -o "$ASDF_DOWNLOAD_PATH/$release_file" -C - "$url" || fail "Could not download $url"
+
 
 #  Extract contents of tar.gz file into the download directory
+echo "* Extracting..."
 unzip "$ASDF_DOWNLOAD_PATH/$release_file" -d "$ASDF_DOWNLOAD_PATH" || fail "Could not extract $release_file"
 
-# Remove the tar.gz file since we don't need to keep it
+# Remove the zip file since we don't need to keep it
+echo "* Cleaning up..."
 rm "$ASDF_DOWNLOAD_PATH/$release_file"

@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-# #  exec-path -*- mode: sh -*-
-
-set -euo pipefail
-
-echo "./SoarCLI.sh"
